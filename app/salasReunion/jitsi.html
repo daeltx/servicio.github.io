@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salas de Reunión Habitanto</title>
+
+<script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <script src="https://meet.jit.si/external_api.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.0.slim.min.js"
+    integrity="sha256-MlusDLJIP1GRgLrOflUQtshyP0TwT/RHXsI1wWGnQhs=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"
+    integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm"
+    crossorigin="anonymous"></script>
+  <script src="midleware/salas.js"></script>
+  <style type="text/css">
+    iframe {
+      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+    }
+  </style>
+</head>
+
+<body style="margin: 0px; padding: 0px; overflow: hidden;">
+  <div id="meet"></div>
+
+  <script type="text/javascript">
+    let sala = SalaCreate.configSala();
+
+    let fechaSystem = UtilFecha.convertDate(UtilFecha.getFecha());
+
+    let fechaAsamblea = sala.fecha;
+    
+    let permirtirSala = UtilFecha.getIsSame(fechaSystem, fechaAsamblea);
+
+    $(document).ready(function () {
+
+      $('#subject').val(sala.subject);
+      $('#displayName').val(sala.displayName);
+
+      if(sala.tipo === '1') {
+        $("#myModal").modal({
+          show: true,
+          backdrop: "static"
+        });
+      }
+      if(sala.tipo === '2' && !permirtirSala) {
+        $('#mensaje').html = 'No se encuentra disponible '+sala.fecha;
+        $('#subjectReunion').val(sala.subject);
+        $("#aviso").modal({
+          show: true,
+          backdrop: "static"
+        });
+      }
+      if(sala.tipo === '2' && permirtirSala) {
+        CallInit.showSala(sala);
+        sala = {};
+      }
+
+      let getDataForm = (imput) => {
+        return $("#" + imput).val();
+      };
+
+      $("#generarSala").on("click", () => {
+        console.log('al presionar generaSala')
+        let salaInit = {
+          subject: sala.subject,
+          displayName: getDataForm("displayName"),
+          roomName: sala.roomName,
+          password: sala.password
+        };
+         CallInit.showSala(salaInit);
+         sala = {};
+      });
+    });
+  </script>
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="width: 800px;">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Unirse a la sala</h4>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form action="/action_page.php">
+            <div class="form-group">
+              <label for="subject">Razón de la reunión:</label>
+              <input readonly type="text" class="form-control" id="subject" placeholder="Ingrese su nombre" name="subject" />
+            </div>
+            <div class="form-group">
+              <label for="displayName">Su nombre:</label>
+              <input type="text" class="form-control" id="displayName" placeholder="Ingrese su nombre"
+                name="displayName" />
+            </div>
+        </div>
+        <button data-dismiss="modal" type="button" name="generaSala" id="generarSala" class=" btn btn-success col-md-12">
+          Entrar a la sala
+        </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="aviso">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="width: 800px;">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Disponibilidad</h4>
+          <button type="button" class="close" data-dismiss="modal">
+            &times;
+          </button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form action="/action_page.php">
+            <div class="form-group">
+              <label for="subject">Reunión:</label>
+              <input readonly type="text" class="form-control" id="subjectReunion" name="subjectReunion" />
+            </div>
+            <div class="form-group">
+              <label id="mensaje" name="mensaje">
+
+              </label>
+            </div>
+        </div>
+        <button data-dismiss="modal" type="button" name="salirSala" id="salirSala" class=" btn btn-success col-md-12">
+          Salir 
+        </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
