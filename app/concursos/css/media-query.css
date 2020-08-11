@@ -1,0 +1,35 @@
+
+  @media screen and (max-width: 500px) {
+    .titulo_promocion  {
+        font-size: 25px !important;
+    }
+    body {
+        background-color: #45dac8; 
+    }
+
+    .cabecera-formulario {
+        display: block;
+        margin-top: 9px;
+        margin-right: 1.3rem;
+    }
+    .fomulario_promocion{
+        opacity: 0.9;
+        font-size: 14px;
+        border-radius: 10px;
+        color: #32A7A5;
+        border-width: 1px;
+        border-style: solid;
+        border-color:#71E4E1;
+        background-color: #F4FFFD;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 0.16rem;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .boton_concurso {
+        margin-top: 10px;
+        background-color: #71E4E1;
+        color: white;
+    }
+  }

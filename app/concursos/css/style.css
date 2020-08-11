@@ -1,0 +1,41 @@
+body {
+    height: auto;
+    background-color: #74c4bb; 
+    background-repeat: no-repeat;
+    background-image: url("../img/promocion.jpg"); 
+    width: 100%;
+    height: auto;
+    background-attachment: scroll;
+    background-position: 0 0; 
+}
+
+.cabecera-formulario {
+    margin-top: 150px;
+    /* margin-right: 120px; */
+}
+.formulario_concurso {
+    height: 800px;
+}
+.fomulario_promocion{
+    opacity: 0.9;
+    font-size: 18px;
+    border-radius: 10px;
+    color: #32A7A5;
+    border-width: 1px;
+    border-style: solid;
+    border-color:#71E4E1;
+    background-color: #F4FFFD;
+    margin-left: 1200px;
+    margin-right: 25px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+.boton_concurso {
+    background-color: #71E4E1;
+    color: white;
+}
+.titulo_promocion  {
+    margin:auto;
+    font-size: 45px;
+    text-align:center;
+}
